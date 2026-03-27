@@ -15,7 +15,7 @@ from datetime import datetime
 
 # ── Logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.INFO
     format="%(asctime)s  %(levelname)s  %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
@@ -202,6 +202,7 @@ def main():
         rows = fetch_notrial_signups(LOOKBACK_HOURS)
     except Exception as exc:
         log.error("PostHog fetch failed: %s", exc)
+        logging.shutdown()  # flush logs before exit
         sys.exit(1)
 
     log.info("PostHog returned %d rows", len(rows))
